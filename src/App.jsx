@@ -1,6 +1,6 @@
 import "./App.css";
 import "../public/assets/logo.png";
-import Header from './components/Header'
+import Header from "./components/Header";
 import WithoutAStatus from "./components/Columns/WithoutAStatus";
 import NeedToDo from "./components/Columns/NeedToDo";
 import AtWork from "./components/Columns/AtWork";
@@ -14,22 +14,19 @@ function App() {
   return (
     <>
       <div className="wrapper">
-        <PopExit/>
-
-        <PopNewCard/>
-
-        <PopBrowse/>
-
-        <Header/>
+        <PopExit />
+        <PopNewCard />
+        <PopBrowse />
+        <Header />
         <main className="main">
           <div className="container">
             <div className="main__block">
               <div className="main__content">
-                <WithoutAStatus/>
-                <NeedToDo/>
-                <AtWork/>
-                <Testing/>
-                <Done/>
+                <WithoutAStatus />
+                <NeedToDo />
+                <AtWork />
+                <Testing />
+                <Done />
               </div>
             </div>
           </div>
