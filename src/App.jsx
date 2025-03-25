@@ -1,35 +1,38 @@
 import "./App.css";
 import "../public/assets/logo.png";
-import Header from './components/Header'
-import WithoutAStatus from "./components/Columns/WithoutAStatus";
-import NeedToDo from "./components/Columns/NeedToDo";
-import AtWork from "./components/Columns/AtWork";
-import Testing from "./components/Columns/Testing";
-import Done from "./components/Columns/Done";
-import PopNewCard from "./components/Actions/PopNewCard";
-import PopBrowse from "./components/Actions/PopBrowse";
-import PopExit from "./components/Actions/PopExit";
+import Header from "./components/Header/Header";
+import PopNewCard from "./components/PopNewCard/PopNewCard";
+import PopBrowse from "./components/PopBrowse/PopBrowse";
+import PopExit from "./components/PopExit/PopExit";
+import { useState } from "react";
+import cardList, { statusList } from "../data";
+import Column from "./components/Column/Column";
 
 function App() {
+  const [cards, setCards] = useState(cardList);
+  const addNewCard = (newCard) => {
+    setCards((prev) => [...prev, newCard]);
+  };
+  console.log(cards);
+
   return (
     <>
       <div className="wrapper">
-        <PopExit/>
-
-        <PopNewCard/>
-
-        <PopBrowse/>
-
-        <Header/>
+        <PopExit />
+        <PopNewCard addNewCard={addNewCard} cards={cards} />
+        <PopBrowse />
+        <Header />
         <main className="main">
           <div className="container">
             <div className="main__block">
               <div className="main__content">
-                <WithoutAStatus/>
-                <NeedToDo/>
-                <AtWork/>
-                <Testing/>
-                <Done/>
+                {statusList.map((item) => (
+                  <Column
+                    key={item.id}
+                    status={item.status}
+                    cards={cards.filter((el) => el.status === item.status)}
+                  />
+                ))}
               </div>
             </div>
           </div>
