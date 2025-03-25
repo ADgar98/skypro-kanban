@@ -1,6 +1,77 @@
-const PopNewCard = () => {
+import { useEffect, useState } from "react";
+
+const PopNewCard = ({ addNewCard, cards = [] }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    title: "",
+    topic: "Web Design",
+    date: new Date().toLocaleDateString("ru-RU"),
+    status: "Тестирование",
+  });
+
+  const [pendingCard, setPendingCard] = useState(null);
+
+  useEffect(() => {
+    if (pendingCard) {
+      setIsLoading(true);
+      
+      const timer = setTimeout(() => {
+        addNewCard(pendingCard);
+        setPendingCard(null);
+        setIsLoading(false);
+        // Сброс формы
+        setFormData({
+          title: '',
+          topic: 'Web Design',
+          date: new Date().toLocaleDateString('ru-RU'),
+          status: 'Тестирование'
+        });
+      }, 1500); // Имитация задержки 1.5 секунды
+
+      return () => clearTimeout(timer);
+    }
+  }, [pendingCard, addNewCard]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // const getNewCard = () => {
+  //   const maxId =
+  //     cards.length > 0 ? Math.max(...cards.map((card) => card.id)) : 0;
+
+  //   const newCard = {
+  //     id: maxId + 1,
+  //     topic: "Web Design",
+  //     title: "Название задачи",
+  //     date: "30.10.2023",
+  //     status: "Тестирование",
+  //   };
+  //   addNewCard(newCard);
+  //   console.log(cardList);
+  // };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const maxId =
+      cards.length > 0 ? Math.max(...cards.map((card) => card.id)) : 0;
+      setPendingCard({
+        id: maxId + 1,
+        ...formData
+      });
+    }
+    
   return (
+    
     <div className="pop-new-card" id="popNewCard">
+      {isLoading && (
+        <div className="loading-indicator">
+          <div className="spinner"></div>
+          <p>Добавляем карточку...</p>
+        </div>
+      )}
       <div className="pop-new-card__container">
         <div className="pop-new-card__block">
           <div className="pop-new-card__content">
@@ -10,9 +81,9 @@ const PopNewCard = () => {
             </a>
             <div className="pop-new-card__wrap">
               <form
+                onSubmit={handleSubmit}
                 className="pop-new-card__form form-new"
                 id="formNewCard"
-                action="#"
               >
                 <div className="form-new__block">
                   <label htmlFor="formTitle" className="subttl">
@@ -21,7 +92,10 @@ const PopNewCard = () => {
                   <input
                     className="form-new__input"
                     type="text"
-                    name="name"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    required
                     id="formTitle"
                     placeholder="Введите название задачи..."
                     autoFocus
@@ -154,7 +228,12 @@ const PopNewCard = () => {
                 </div>
               </div>
             </div>
-            <button className="form-new__create _hover01" id="btnCreate">
+            <button
+            onClick={handleSubmit}
+              type="submit"
+              className="form-new__create _hover01"
+              id="btnCreate"
+            >
               Создать задачу
             </button>
           </div>
