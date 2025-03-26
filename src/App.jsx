@@ -19,9 +19,9 @@ function App() {
     <>
       <div className="wrapper">
         <PopExit />
-        <PopNewCard addNewCard={addNewCard} cards={cards} />
+        
         <PopBrowse />
-        <Header />
+        <Header addNewCard={addNewCard} cards={cards}/>
         <main className="main">
           <div className="container">
             <div className="main__block">
