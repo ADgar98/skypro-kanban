@@ -1,35 +1,48 @@
 import "./App.css";
 import "../public/assets/logo.png";
-import Header from './components/Header'
-import WithoutAStatus from "./components/Columns/WithoutAStatus";
-import NeedToDo from "./components/Columns/NeedToDo";
-import AtWork from "./components/Columns/AtWork";
-import Testing from "./components/Columns/Testing";
-import Done from "./components/Columns/Done";
-import PopNewCard from "./components/Actions/PopNewCard";
-import PopBrowse from "./components/Actions/PopBrowse";
-import PopExit from "./components/Actions/PopExit";
+import Header from "./components/Header/Header";
+import PopNewCard from "./components/PopNewCard/PopNewCard";
+import PopBrowse from "./components/PopBrowse/PopBrowse";
+import PopExit from "./components/PopExit/PopExit";
+import { useEffect, useState } from "react";
+import cardList, { statusList } from "../data";
+import Column from "./components/Column/Column";
 
 function App() {
+  const [cards, setCards] = useState(cardList);
+  const addNewCard = (newCard) => {
+    setCards((prev) => [...prev, newCard]);
+  };
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, [loading]);
+
   return (
     <>
       <div className="wrapper">
-        <PopExit/>
+        <PopExit />
 
-        <PopNewCard/>
-
-        <PopBrowse/>
-
-        <Header/>
+        <PopBrowse />
+        <Header addNewCard={addNewCard} cards={cards} />
         <main className="main">
           <div className="container">
             <div className="main__block">
               <div className="main__content">
-                <WithoutAStatus/>
-                <NeedToDo/>
-                <AtWork/>
-                <Testing/>
-                <Done/>
+                {loading ? (
+                  <p style={{ textAlign: "center", width: '100%', fontSize: '24px'}}>Данные загружаются...</p>
+                ) : (
+                  statusList.map((item) => (
+                    <Column
+                      key={item.id}
+                      status={item.status}
+                      cards={cards.filter((el) => el.status === item.status)}
+                    />
+                  ))
+                )}
               </div>
             </div>
           </div>

@@ -1,10 +1,10 @@
-const Copywriting = () => {
+const Card = ({topic, title, date}) => {
     return (
         <div className="cards__item">
                       <div className="cards__card card">
                         <div className="card__group">
-                          <div className="card__theme _purple">
-                            <p className="_purple">Copywriting</p>
+                          <div className="card__theme _green">
+                            <p className="_green">{topic}</p>
                           </div>
                           <a href="#popBrowse" target="_self">
                             <div className="card__btn">
@@ -16,7 +16,7 @@ const Copywriting = () => {
                         </div>
                         <div className="card__content">
                           <a href="" target="_blank">
-                            <h3 className="card__title">Название задачи</h3>
+                            <h3 className="card__title">{title}</h3>
                           </a>
                           <div className="card__date">
                             <svg
@@ -47,11 +47,11 @@ const Copywriting = () => {
                                 </clipPath>
                               </defs>
                             </svg>
-                            <p>30.10.23</p>
+                            <p>{date}</p>
                           </div>
                         </div>
                       </div>
                     </div>
     )
 }
-export default Copywriting
+export default Card
