@@ -1,13 +1,13 @@
 import "./App.css";
 import "../public/assets/logo.png";
 import Header from "./components/Header/Header";
-import PopNewCard from "./components/PopNewCard/PopNewCard";
 import PopBrowse from "./components/PopBrowse/PopBrowse";
 import PopExit from "./components/PopExit/PopExit";
 import { useEffect, useState } from "react";
 import cardList, { statusList } from "../data";
 import Column from "./components/Column/Column";
 import { Container, MainBlock, MainContent, Wrapper } from "./SApp";
+import { GlobalStyles } from "./GlobalStyles";
 
 function App() {
   const [cards, setCards] = useState(cardList);
@@ -24,6 +24,7 @@ function App() {
 
   return (
     <>
+    <GlobalStyles/>
       <Wrapper>
         <PopExit />
         <PopBrowse />
