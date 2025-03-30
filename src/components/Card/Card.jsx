@@ -1,24 +1,26 @@
-const Copywriting = () => {
+import { CardBtn, CardContent, CardDate, CardGroup, CardsCard, CardTheme, StyledCard } from "./StyledCard"
+
+const Card = ({topic, title, date}) => {
     return (
-        <div className="cards__item">
-                      <div className="cards__card card">
-                        <div className="card__group">
-                          <div className="card__theme _purple">
-                            <p className="_purple">Copywriting</p>
-                          </div>
+        <StyledCard>
+                      <CardsCard>
+                        <CardGroup>
+                          <CardTheme $topic={topic}>
+                            <p>{topic}</p>
+                          </CardTheme>
                           <a href="#popBrowse" target="_self">
-                            <div className="card__btn">
+                            <CardBtn>
                               <div></div>
                               <div></div>
                               <div></div>
-                            </div>
+                            </CardBtn>
                           </a>
-                        </div>
-                        <div className="card__content">
+                        </CardGroup>
+                        <CardContent>
                           <a href="" target="_blank">
-                            <h3 className="card__title">Название задачи</h3>
+                            <h3>{title}</h3>
                           </a>
-                          <div className="card__date">
+                          <CardDate>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="13"
@@ -47,11 +49,11 @@ const Copywriting = () => {
                                 </clipPath>
                               </defs>
                             </svg>
-                            <p>30.10.23</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                            <p>{date}</p>
+                          </CardDate>
+                        </CardContent>
+                      </CardsCard>
+                    </StyledCard>
     )
 }
-export default Copywriting
+export default Card
