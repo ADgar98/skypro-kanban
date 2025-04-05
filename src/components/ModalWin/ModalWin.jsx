@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { HeaderPopUserSet, PopUserSetMail, PopUserSetName, PopUserSetTheme } from "./SModalWin";
 
 const ModalWin = () => {
@@ -10,7 +11,7 @@ const ModalWin = () => {
         <input type="checkbox" name="checkbox" />
       </PopUserSetTheme>
       <button type="button">
-        <a href="#popExit">Выйти</a>
+        <Link to="/exit">Выйти</Link>
       </button>
     </HeaderPopUserSet>
   );

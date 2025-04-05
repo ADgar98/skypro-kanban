@@ -11,7 +11,7 @@ import {
   SHeader,
 } from "./SHeader";
 
-const Header = ({ addNewCard, cards }) => {
+const Header = ({ addNewCard, cards, }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPopNewCardOpen, setIsPopNewCardOpen] = useState(false);
   const toggleModal = () => {
@@ -27,12 +27,12 @@ const Header = ({ addNewCard, cards }) => {
         <HeaderBlock>
           <HeaderLogo>
             <a href="" target="_self">
-              <img src="./assets/logo.png" alt="logo" />
+              <img src="/assets/logo.png" alt="logo" />
             </a>
           </HeaderLogo>
           <HeaderLogo>
             <a href="" target="_self">
-              <img src="./assets/logo_dark.png" alt="logo" />
+              <img src="/assets/logo_dark.png" alt="logo" />
             </a>
           </HeaderLogo>
           <HeaderNav>

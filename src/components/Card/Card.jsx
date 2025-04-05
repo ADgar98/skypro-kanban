@@ -1,6 +1,7 @@
+import { Link } from "react-router-dom"
 import { CardBtn, CardContent, CardDate, CardGroup, CardsCard, CardTheme, StyledCard } from "./StyledCard"
 
-const Card = ({topic, title, date}) => {
+const Card = ({topic, title, date, id}) => {
     return (
         <StyledCard>
                       <CardsCard>
@@ -8,18 +9,18 @@ const Card = ({topic, title, date}) => {
                           <CardTheme $topic={topic}>
                             <p>{topic}</p>
                           </CardTheme>
-                          <a href="#popBrowse" target="_self">
+                          <Link to={`card/${id}`}>
                             <CardBtn>
                               <div></div>
                               <div></div>
                               <div></div>
                             </CardBtn>
-                          </a>
+                          </Link>
                         </CardGroup>
                         <CardContent>
-                          <a href="" target="_blank">
+                          <Link to={`card/${id}`}>
                             <h3>{title}</h3>
-                          </a>
+                          </Link>
                           <CardDate>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"

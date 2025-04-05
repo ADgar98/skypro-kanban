@@ -15,6 +15,7 @@ const Column = ({ status, cards }) => {
               title={card.title}
               topic={card.topic}
               key={card.id}
+              id={card.id}
             />
           );
         })}
