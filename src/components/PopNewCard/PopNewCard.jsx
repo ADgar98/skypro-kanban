@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-const PopNewCard = ({
-  addNewCard,
-  cards = [],
-  setIsPopNewCardOpen,
-}) => {
+const PopNewCard = ({ addNewCard, cards = [] }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -12,11 +9,12 @@ const PopNewCard = ({
     date: new Date().toLocaleDateString("ru-RU"),
     status: "Тестирование",
   });
+  const navigate = useNavigate()
 
   const [pendingCard, setPendingCard] = useState(null);
-  const closePopNewCard = () => {
-    setIsPopNewCardOpen(false)
-  }
+  // const closePopNewCard = () => {
+  //   setIsPopNewCardOpen(false)
+  // }
 
   useEffect(() => {
     if (pendingCard) {
@@ -26,7 +24,7 @@ const PopNewCard = ({
         addNewCard(pendingCard);
         setPendingCard(null);
         setIsLoading(false);
-        setIsPopNewCardOpen(false);
+        navigate("/")
 
         setFormData({
           title: "",
@@ -38,7 +36,7 @@ const PopNewCard = ({
 
       return () => clearTimeout(timer);
     }
-  }, [pendingCard, addNewCard, setIsPopNewCardOpen]);
+  }, [pendingCard, addNewCard, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -68,9 +66,9 @@ const PopNewCard = ({
         <div className="pop-new-card__block">
           <div className="pop-new-card__content">
             <h3 className="pop-new-card__ttl">Создание задачи</h3>
-            <a href="#" onClick={closePopNewCard} className="pop-new-card__close">
+            <Link to="/" className="pop-new-card__close">
               &#10006;
-            </a>
+            </Link>
             <div className="pop-new-card__wrap">
               <form
                 onSubmit={handleSubmit}

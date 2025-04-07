@@ -2,17 +2,18 @@ import Header from "../../components/Header/Header";
 import PopBrowse from "../../components/PopBrowse/PopBrowse";
 import PopExit from "../../components/PopExit/PopExit";
 import { useEffect, useState } from "react";
-import cardList, { statusList } from "../../../data";
+// import cardList, { statusList } from "../../../data";
 import Column from "../../components/Column/Column";
 import { Container, MainBlock, MainContent, Wrapper } from "./SMainPage";
 import { Outlet } from "react-router-dom";
+import { statusList } from "../../../data";
 
 
-function MainPage() {
-  const [cards, setCards] = useState(cardList);
-  const addNewCard = (newCard) => {
-    setCards((prev) => [...prev, newCard]);
-  };
+function MainPage({addNewCard, cards}) {
+  // const [cards, setCards] = useState(cardList);
+  // const addNewCard = (newCard) => {
+  //   setCards((prev) => [...prev, newCard]);
+  // };
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

@@ -10,16 +10,17 @@ import {
   HeaderUser,
   SHeader,
 } from "./SHeader";
+import { Link } from "react-router-dom";
 
-const Header = ({ addNewCard, cards, }) => {
+const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPopNewCardOpen, setIsPopNewCardOpen] = useState(false);
+  // const [isPopNewCardOpen, setIsPopNewCardOpen] = useState(false);
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
-  const openPopNewCard = () => {
-    setIsPopNewCardOpen(true);
-  };
+  // const openPopNewCard = () => {
+  //   setIsPopNewCardOpen(true);
+  // };
 
   return (
     <SHeader>
@@ -36,21 +37,15 @@ const Header = ({ addNewCard, cards, }) => {
             </a>
           </HeaderLogo>
           <HeaderNav>
-            <HeaderBtnMainNew onClick={openPopNewCard} id="btnMainNew">
-              <a href="#popNewCard">Создать новую задачу</a>
+            <HeaderBtnMainNew id="btnMainNew">
+              <Link to="/NewCard">Создать новую задачу</Link>
             </HeaderBtnMainNew>
             <HeaderUser onClick={toggleModal}>
               Ivan Ivanov
             </HeaderUser>
             {isModalOpen && <ModalWin />}
-            {isPopNewCardOpen && (
-              <PopNewCard
-                addNewCard={addNewCard}
-                cards={cards}
-                isPopNewCardOpen={isPopNewCardOpen}
-                setIsPopNewCardOpen={setIsPopNewCardOpen}
-              />
-            )}
+        
+      
           </HeaderNav>
         </HeaderBlock>
       </HeaderContainer>
