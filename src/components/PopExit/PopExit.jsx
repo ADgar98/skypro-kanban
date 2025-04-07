@@ -1,4 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
+import {
+  PopExitBlock,
+  PopExitContainer,
+  PopExitFormGroup,
+  PopExitNo,
+  PopExitTtl,
+  PopExitYes,
+  StyledPopExit,
+} from "./SPopExit";
 
 const PopExit = ({ setIsAuth }) => {
   const navigate = useNavigate();
@@ -8,29 +17,25 @@ const PopExit = ({ setIsAuth }) => {
     setIsAuth(false);
   };
   return (
-    <div className="pop-exit" id="popExit">
-      <div className="pop-exit__container">
-        <div className="pop-exit__block">
-          <div className="pop-exit__ttl">
+    <StyledPopExit id="popExit">
+      <PopExitContainer>
+        <PopExitBlock>
+          <PopExitTtl>
             <h2>Выйти из аккаунта?</h2>
-          </div>
+          </PopExitTtl>
           <form className="pop-exit__form" id="formExit" action="#">
-            <div className="pop-exit__form-group">
-              <button
-                onClick={deleteIsAuth}
-                className="pop-exit__exit-yes _hover01"
-                id="exitYes"
-              >
+            <PopExitFormGroup>
+              <PopExitYes onClick={deleteIsAuth} id="exitYes">
                 <p>Да, выйти</p>
-              </button>
-              <button className="pop-exit__exit-no _hover03" id="exitNo">
+              </PopExitYes>
+              <PopExitNo id="exitNo">
                 <Link to={"/"}>Нет, остаться</Link>
-              </button>
-            </div>
+              </PopExitNo>
+            </PopExitFormGroup>
           </form>
-        </div>
-      </div>
-    </div>
+        </PopExitBlock>
+      </PopExitContainer>
+    </StyledPopExit>
   );
 };
 export default PopExit;

@@ -1,58 +1,31 @@
-import { useEffect, useState } from "react";
-import cardList, { statusList } from "../../data";
+import { Route, Routes } from "react-router-dom";
+import MainPage from "../pages/MainPage/MainPage";
+import PopBrowsePage from "../pages/PopBrowsePage/PopBrowsePage";
+import { SignInPage } from "../pages/SignInPage/SignInPage";
+import { SignUpPage } from "../pages/SignUpPage/SignUpPage";
+import PopExitPage from "../pages/PopExitPage/PopExitPage";
+import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
+import { useState } from "react";
+import { PrivateRoute } from "../components/PrivateRoute";
+import PopNewCard from "./PopNewCard/PopNewCard";
+import { PopNewCardPage } from "../pages/PopNewCardPage/PopNewCardPage";
 
 function AppRoutes() {
-    const [cards, setCards] = useState(cardList);
-    const addNewCard = (newCard) => {
-      setCards((prev) => [...prev, newCard]);
-    };
-    const [loading, setLoading] = useState(true);
-  
-    useEffect(() => {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1500);
-    }, [loading]);
-  
-    return (
-      <>
-      <GlobalStyles/>
-        <Wrapper>
-          <PopExit />
-          {/* <PopBrowse /> */}
-          <Header addNewCard={addNewCard} cards={cards} />
-          <main>
-            <Container>
-              <MainBlock>
-                <MainContent>
-                  {loading ? (
-                    <p
-                      style={{
-                        textAlign: "center",
-                        width: "100%",
-                        fontSize: "24px",
-                      }}
-                    >
-                      Данные загружаются...
-                    </p>
-                  ) : (
-                    statusList.map((item) => (
-                      <Column
-                        key={item.id}
-                        status={item.status}
-                        cards={cards.filter((el) => el.status === item.status)}
-                      />
-                    ))
-                  )}
-                </MainContent>
-              </MainBlock>
-            </Container>
-          </main>
-        </Wrapper>
-  
-        <script src="js/script.js"></script>
-      </>
-    );
+      const [isAuth, setIsAuth] = useState(false)
+  return (
+    <Routes>
+      <Route element={<PrivateRoute isAuth={isAuth} />}>
+        <Route path="/" element={<MainPage />}>
+          <Route path="card/:id" element={<PopBrowsePage />} />
+          <Route path="/exit" element={<PopExitPage setIsAuth={setIsAuth}/>} />
+          <Route path="/NewCard" element={<PopNewCardPage/>}/>
+        </Route>
+      </Route>
+      <Route path="/signIn" element={<SignInPage setIsAuth={setIsAuth} />} />
+      <Route path="/signUp" element={<SignUpPage />} />
+      <Route path="/*" element={<NotFoundPage />} />
+    </Routes>
+  );
   }
   
   export default AppRoutes;
