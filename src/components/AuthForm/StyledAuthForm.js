@@ -134,3 +134,6 @@ text-align: center;
   text-decoration: underline;
 }
 `
+export  const StyledP = styled.p`
+color: red;
+`;

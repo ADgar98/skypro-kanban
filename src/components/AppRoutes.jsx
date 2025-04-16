@@ -20,8 +20,8 @@ function AppRoutes() {
   return (
     <Routes>
       <Route element={<PrivateRoute isAuth={isAuth} />}>
-        <Route path="/" element={<MainPage addNewCard={addNewCard} cards={cards}/>}>
-          <Route path="card/:id" element={<PopBrowsePage />} />
+        <Route path="/" element={<MainPage addNewCard={addNewCard}/>}>
+          <Route path="card/:id" element={<PopBrowsePage/>} />
           <Route path="/exit" element={<PopExitPage setIsAuth={setIsAuth} />} />
           <Route
             path="/NewCard"

@@ -41,7 +41,7 @@ export const CardTheme = styled.div`
       switch ($topic) {
         case "Web Design":
           return "#FF6D00";
-        case "Reserch":
+        case "Research":
           return "#06B16E";
         case "Copywriting":
           return "#9A48F1";
@@ -54,7 +54,7 @@ export const CardTheme = styled.div`
     switch ($topic) {
       case "Web Design":
         return "#FFE4C2";
-      case "Reserch":
+      case "Research":
         return "#B4FDD1";
       case "Copywriting":
         return "#E9D4FF";

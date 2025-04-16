@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { postCard } from "../../services/api";
 
-const PopNewCard = ({ addNewCard, cards = [] }) => {
+const PopNewCard = ({ addNewCard }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     topic: "Web Design",
-    date: new Date().toLocaleDateString("ru-RU"),
+    date: new Date().toISOString(),
     status: "Тестирование",
   });
   const navigate = useNavigate()
@@ -29,8 +30,9 @@ const PopNewCard = ({ addNewCard, cards = [] }) => {
         setFormData({
           title: "",
           topic: "Web Design",
-          date: new Date().toLocaleDateString("ru-RU"),
+          date: new Date().toISOString(),
           status: "Тестирование",
+          description: ""
         });
       }, 1500);
 
@@ -42,14 +44,16 @@ const PopNewCard = ({ addNewCard, cards = [] }) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-
-  const handleSubmit = (e) => {
+const Token = "bgc0b8awbwas6g5g5k5o5s5w606g37w3cc3bo3b83k39s3co3c83c03ck"
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    
+    const createdTask = await postCard(Token, formData);
+    console.log("Задача создана:", createdTask);
 
-    const maxId =
-      cards.length > 0 ? Math.max(...cards.map((card) => card.id)) : 0;
+    
     setPendingCard({
-      id: maxId + 1,
       ...formData,
     });
   };
@@ -97,7 +101,9 @@ const PopNewCard = ({ addNewCard, cards = [] }) => {
                   </label>
                   <textarea
                     className="form-new__area"
-                    name="text"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
                     id="textArea"
                     placeholder="Введите описание задачи..."
                   ></textarea>

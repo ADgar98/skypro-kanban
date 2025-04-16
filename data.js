@@ -78,10 +78,10 @@ const cardList = [
   },
 ];
 export const statusList = [
-  { status: "Без статуса", id: 1 },
-  { status: "Нужно сделать", id: 2 },
-  { status: "В работе", id: 3 },
-  { status: "Тестирование", id: 4 },
-  { status: "Готово", id: 5 },
+  { status: "Без статуса" },
+  { status: "Нужно сделать"},
+  { status: "В работе"},
+  { status: "Тестирование"},
+  { status: "Готово" },
 ];
 export default cardList;

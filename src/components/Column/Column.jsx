@@ -14,9 +14,10 @@ const Column = ({ status, cards }) => {
               date={card.date}
               title={card.title}
               topic={card.topic}
-              key={card.id}
-              id={card.id}
+              key={card._id}
+              id={card._id}
             />
+          
           );
         })}
       </ColumnCard>
