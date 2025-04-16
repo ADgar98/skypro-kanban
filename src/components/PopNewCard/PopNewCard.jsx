@@ -2,60 +2,44 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { postCard } from "../../services/api";
 
-const PopNewCard = ({ addNewCard }) => {
+const PopNewCard = ({ setCards }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [topic, setTopic] = useState("Web Design");
   const [formData, setFormData] = useState({
     title: "",
-    topic: "Web Design",
+    topic: topic,
     date: new Date().toISOString(),
-    status: "Тестирование",
+    status: "Без статуса",
+    description: "",
   });
-  const navigate = useNavigate()
-
-  const [pendingCard, setPendingCard] = useState(null);
-  // const closePopNewCard = () => {
-  //   setIsPopNewCardOpen(false)
-  // }
-
   useEffect(() => {
-    if (pendingCard) {
-      setIsLoading(true);
-
-      const timer = setTimeout(() => {
-        addNewCard(pendingCard);
-        setPendingCard(null);
-        setIsLoading(false);
-        navigate("/")
-
-        setFormData({
-          title: "",
-          topic: "Web Design",
-          date: new Date().toISOString(),
-          status: "Тестирование",
-          description: ""
-        });
-      }, 1500);
-
-      return () => clearTimeout(timer);
-    }
-  }, [pendingCard, addNewCard, navigate]);
+    setFormData(prev => ({ ...prev, topic }));
+  }, [topic]);
+  
+  
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-const Token = "bgc0b8awbwas6g5g5k5o5s5w606g37w3cc3bo3b83k39s3co3c83c03ck"
+  const Token = "bgc0b8awbwas6g5g5k5o5s5w606g37w3cc3bo3b83k39s3co3c83c03ck";
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    
-    const createdTask = await postCard(Token, formData);
-    console.log("Задача создана:", createdTask);
+    try {
+      setIsLoading(true);
+      e.preventDefault();
 
-    
-    setPendingCard({
-      ...formData,
-    });
+      const response = await postCard(Token, formData);
+
+      setCards(response);
+
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+      throw new Error(error.response.error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -213,14 +197,31 @@ const Token = "bgc0b8awbwas6g5g5k5o5s5w606g37w3cc3bo3b83k39s3co3c83c03ck"
             <div className="pop-new-card__categories categories">
               <p className="categories__p subttl">Категория</p>
               <div className="categories__themes">
-                <div className="categories__theme _orange _active-category">
-                  <p className="_orange">Web Design</p>
+                <div
+                  className={`categories__theme _orange ${
+                    topic === "Web Design" ? "_active-category" : ""
+                  }`}
+                >
+                  <p onClick={() => setTopic("Web Design")} className="_orange">
+                    Web Design
+                  </p>
                 </div>
-                <div className="categories__theme _green">
-                  <p className="_green">Research</p>
+                <div className={`categories__theme _green ${
+                    topic === "Research" ? "_active-category" : ""
+                  }`}>
+                  <p onClick={() => setTopic("Research")} className="_green">
+                    Research
+                  </p>
                 </div>
-                <div className="categories__theme _purple">
-                  <p className="_purple">Copywriting</p>
+                <div className={`categories__theme _purple ${
+                    topic === "Copywriting" ? "_active-category" : ""
+                  }`}>
+                  <p
+                    onClick={() => setTopic("Copywriting")}
+                    className="_purple"
+                  >
+                    Copywriting
+                  </p>
                 </div>
               </div>
             </div>

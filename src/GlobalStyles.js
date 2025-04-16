@@ -523,6 +523,7 @@ body {
   font-weight: 600;
   line-height: 14px;
   white-space: nowrap;
+  cursor: pointer
 }
 
 .pop-browse {

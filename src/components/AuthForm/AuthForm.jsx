@@ -103,7 +103,7 @@ try {
           <SModalFormLogin id="formLogIn" onSubmit={handleSubmit} action="#">
             {isSignUp && (
               <SModalInput
-              error={errors.name}
+             
               type="text"
               name="name"
               id="formname"
@@ -113,7 +113,7 @@ try {
               />
             )}
             <SModalInput
-              error={errors.login}
+              
               type="text"
               name="login"
               id="formlogin"
@@ -122,7 +122,7 @@ try {
               onChange={handleChange}
             />
             <SModalInput
-              error={errors.password}
+              
               type="password"
               name="password"
               id="formpassword"

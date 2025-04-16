@@ -7,25 +7,24 @@ import PopExitPage from "../pages/PopExitPage/PopExitPage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import { useState } from "react";
 import { PrivateRoute } from "../components/PrivateRoute";
-import PopNewCard from "./PopNewCard/PopNewCard";
 import { PopNewCardPage } from "../pages/PopNewCardPage/PopNewCardPage";
-import cardList from "../../data";
 
 function AppRoutes() {
   const [isAuth, setIsAuth] = useState(false);
-  const [cards, setCards] = useState(cardList);
-  const addNewCard = (newCard) => {
-    setCards((prev) => [...prev, newCard]);
-  };
+  const [cards, setCards] = useState([]);
+
   return (
     <Routes>
       <Route element={<PrivateRoute isAuth={isAuth} />}>
-        <Route path="/" element={<MainPage addNewCard={addNewCard}/>}>
-          <Route path="card/:id" element={<PopBrowsePage/>} />
+        <Route
+          path="/"
+          element={<MainPage setCards={setCards} cards={cards} />}
+        >
+          <Route path="card/:id" element={<PopBrowsePage />} />
           <Route path="/exit" element={<PopExitPage setIsAuth={setIsAuth} />} />
           <Route
             path="/NewCard"
-            element={<PopNewCardPage addNewCard={addNewCard} cards={cards} />}
+            element={<PopNewCardPage setCards={setCards} />}
           />
         </Route>
       </Route>

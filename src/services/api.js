@@ -8,7 +8,7 @@ export async function fetchCards({ token }) {
             Authorization: 'Bearer ' + token,
          },
       })
-      return data.data
+      return data.data.tasks
       
    } catch (error) {
       throw new Error(error.message)
@@ -16,13 +16,13 @@ export async function fetchCards({ token }) {
 }
 
 export async function postCard (token,  newTask) {
-   try { const data = axios.post('https://wedev-api.sky.pro/api/kanban', newTask, {
+   try { const data = await axios.post('https://wedev-api.sky.pro/api/kanban', newTask, {
       headers: {
         'Content-Type': 'text/html',
         'Authorization': 'Bearer ' + token
       }
     })
-    return data.data
+    return data.data.tasks
    } catch (error) {
       throw new Error(error.message)
    }

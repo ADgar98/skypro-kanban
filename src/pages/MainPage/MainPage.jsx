@@ -7,7 +7,7 @@ import { statusList } from "../../../data";
 import { fetchCards } from "../../services/api";
 
 
-function MainPage({addNewCard}) {
+function MainPage({setCards, cards}) {
   
   const [loading, setLoading] = useState(true);
 
@@ -19,24 +19,23 @@ function MainPage({addNewCard}) {
 
   
 
-  const [cardsData, setCardsData] = useState([]);
+  
   const [error, setError] = useState('');
 
   const getCards = useCallback(async () => {
     try {
        setLoading(true);
        const data = await fetchCards({
-          // пока у нас не реализована авторизация, передаём токен вручную
           token: 'bgc0b8awbwas6g5g5k5o5s5w606g37w3cc3bo3b83k39s3co3c83c03ck',
        });
        
-       setCardsData(data.tasks);
+       setCards(data);
     } catch (err) {
        setError(err.message);
     } finally {
        setLoading(false);
     }
- }, []);
+ }, [setCards]);
  useEffect(() => {
     getCards();
  }, [getCards]);
@@ -47,7 +46,7 @@ function MainPage({addNewCard}) {
     <>
       <Wrapper>
         
-        <Header addNewCard={addNewCard} cards={cardsData} />
+        <Header  />
         <main>
           <Container>
             <MainBlock>
@@ -67,7 +66,7 @@ function MainPage({addNewCard}) {
                     <Column
                       key={item.status}
                       status={item.status}
-                      cards={cardsData.filter((el) => el.status === item.status)}
+                      cards={cards.filter((el) => el.status === item.status)}
                     
                     />
                   ))

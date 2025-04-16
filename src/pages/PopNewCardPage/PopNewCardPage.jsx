@@ -1,7 +1,7 @@
 import PopNewCard from "../../components/PopNewCard/PopNewCard"
 
-export const PopNewCardPage = ({addNewCard, cards}) => {
+export const PopNewCardPage = ({setCards}) => {
     return (
-        <PopNewCard addNewCard={addNewCard} cards={cards}/>
+        <PopNewCard setCards={setCards}/>
     )
 }
