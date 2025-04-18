@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { HeaderPopUserSet, PopUserSetMail, PopUserSetName, PopUserSetTheme } from "./SModalWin";
 
-const ModalWin = () => {
+const ModalWin = ({userName, userLogin}) => {
   return (
     <HeaderPopUserSet id="user-set-target">
-      <PopUserSetName>Ivan Ivanov</PopUserSetName>
-      <PopUserSetMail>ivan.ivanov@gmail.com</PopUserSetMail>
+      <PopUserSetName>{userName}</PopUserSetName>
+      <PopUserSetMail>{userLogin}</PopUserSetMail>
       <PopUserSetTheme>
         <p>Темная тема</p>
         <input type="checkbox" name="checkbox" />

@@ -18,6 +18,9 @@ const Header = () => {
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
+  const userData = JSON.parse(localStorage.getItem("userInfo"));
+ 
+  
   // const openPopNewCard = () => {
   //   setIsPopNewCardOpen(true);
   // };
@@ -41,9 +44,9 @@ const Header = () => {
               <Link to="/NewCard">Создать новую задачу</Link>
             </HeaderBtnMainNew>
             <HeaderUser onClick={toggleModal}>
-              Ivan Ivanov
+              {userData.name}
             </HeaderUser>
-            {isModalOpen && <ModalWin />}
+            {isModalOpen && <ModalWin userName={userData.name} userLogin={userData.login} />}
         
       
           </HeaderNav>

@@ -1,5 +1,5 @@
 import { AuthForm } from "../../components/AuthForm/AuthForm";
 
-export const SignUpPage = () => {
-  return <AuthForm isSignUp/>;
+export const SignUpPage = ({setIsAuth, setNewToken}) => {
+  return <AuthForm isSignUp setIsAuth={setIsAuth} setNewToken={setNewToken}/>;
 };

@@ -14,7 +14,8 @@ import { useState } from "react";
 import { signIn, signUp } from "../../services/auth";
 
 
-export const AuthForm = ({ isSignUp, setIsAuth }) => {
+export const AuthForm = ({ isSignUp, setIsAuth, setNewToken }) => {
+  
 
  
   const navigate = useNavigate();
@@ -87,6 +88,7 @@ try {
      setIsAuth(true);
      localStorage.setItem("userInfo", JSON.stringify(data));
      navigate("/");
+     setNewToken(data.token)
   }
   } catch (err) {
      setError(err.message);

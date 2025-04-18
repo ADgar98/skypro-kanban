@@ -12,13 +12,14 @@ import { PopNewCardPage } from "../pages/PopNewCardPage/PopNewCardPage";
 function AppRoutes() {
   const [isAuth, setIsAuth] = useState(false);
   const [cards, setCards] = useState([]);
+  const [newToken, setNewToken] = useState("")
 
   return (
     <Routes>
       <Route element={<PrivateRoute isAuth={isAuth} />}>
         <Route
           path="/"
-          element={<MainPage setCards={setCards} cards={cards} />}
+          element={<MainPage setCards={setCards} cards={cards} newToken={newToken}/>}
         >
           <Route path="card/:id" element={<PopBrowsePage />} />
           <Route path="/exit" element={<PopExitPage setIsAuth={setIsAuth} />} />
@@ -28,8 +29,8 @@ function AppRoutes() {
           />
         </Route>
       </Route>
-      <Route path="/signIn" element={<SignInPage setIsAuth={setIsAuth} />} />
-      <Route path="/signUp" element={<SignUpPage />} />
+      <Route path="/signIn" element={<SignInPage setIsAuth={setIsAuth} setNewToken={setNewToken}/>} />
+      <Route path="/signUp" element={<SignUpPage setIsAuth={setIsAuth} setNewToken={setNewToken}/>} />
       <Route path="/*" element={<NotFoundPage />} />
     </Routes>
   );

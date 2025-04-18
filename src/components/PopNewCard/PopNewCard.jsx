@@ -23,7 +23,9 @@ const PopNewCard = ({ setCards }) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  const Token = "bgc0b8awbwas6g5g5k5o5s5w606g37w3cc3bo3b83k39s3co3c83c03ck";
+
+  const userData = JSON.parse(localStorage.getItem("userInfo"));
+  const Token = userData.token;
   const handleSubmit = async (e) => {
     try {
       setIsLoading(true);

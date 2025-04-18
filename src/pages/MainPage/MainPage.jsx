@@ -7,7 +7,7 @@ import { statusList } from "../../../data";
 import { fetchCards } from "../../services/api";
 
 
-function MainPage({setCards, cards}) {
+function MainPage({setCards, cards, newToken}) {
   
   const [loading, setLoading] = useState(true);
 
@@ -18,15 +18,15 @@ function MainPage({setCards, cards}) {
   }, [loading]);
 
   
-
   
   const [error, setError] = useState('');
 
   const getCards = useCallback(async () => {
     try {
+      if (!newToken) return
        setLoading(true);
        const data = await fetchCards({
-          token: 'bgc0b8awbwas6g5g5k5o5s5w606g37w3cc3bo3b83k39s3co3c83c03ck',
+          token: newToken,
        });
        
        setCards(data);
@@ -35,12 +35,11 @@ function MainPage({setCards, cards}) {
     } finally {
        setLoading(false);
     }
- }, [setCards]);
+ }, [setCards, newToken]);
  useEffect(() => {
+  
     getCards();
  }, [getCards]);
- 
- 
 
   return (
     <>
