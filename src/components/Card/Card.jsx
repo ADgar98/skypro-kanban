@@ -1,24 +1,34 @@
-const Copywriting = () => {
+import { Link } from "react-router-dom"
+import { CardBtn, CardContent, CardDate, CardGroup, CardsCard, CardTheme, StyledCard } from "./StyledCard"
+import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
+
+const Card = ({topic, title, date, id}) => {
+  const formatDateFns = () => {
+    return format(date, 'dd.MM.yy', { locale: ru });
+  }; 
+  const formDate = formatDateFns();
+  
     return (
-        <div className="cards__item">
-                      <div className="cards__card card">
-                        <div className="card__group">
-                          <div className="card__theme _purple">
-                            <p className="_purple">Copywriting</p>
-                          </div>
-                          <a href="#popBrowse" target="_self">
-                            <div className="card__btn">
+        <StyledCard>
+                      <CardsCard>
+                        <CardGroup>
+                          <CardTheme $topic={topic}>
+                            <p>{topic}</p>
+                          </CardTheme>
+                          <Link to={`card/${id}`}>
+                            <CardBtn>
                               <div></div>
                               <div></div>
                               <div></div>
-                            </div>
-                          </a>
-                        </div>
-                        <div className="card__content">
-                          <a href="" target="_blank">
-                            <h3 className="card__title">Название задачи</h3>
-                          </a>
-                          <div className="card__date">
+                            </CardBtn>
+                          </Link>
+                        </CardGroup>
+                        <CardContent>
+                          <Link to={`card/${id}`}>
+                            <h3>{title}</h3>
+                          </Link>
+                          <CardDate>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="13"
@@ -47,11 +57,11 @@ const Copywriting = () => {
                                 </clipPath>
                               </defs>
                             </svg>
-                            <p>30.10.23</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                            <p>{formDate}</p>
+                          </CardDate>
+                        </CardContent>
+                      </CardsCard>
+                    </StyledCard>
     )
 }
-export default Copywriting
+export default Card
