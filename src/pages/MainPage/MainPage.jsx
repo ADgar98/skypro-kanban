@@ -12,8 +12,6 @@ function MainPage() {
   const loading = useCardsData.loading;
   const cards = useCardsData.cards;
   const error = useCardsData.error;
-  console.log(statusList);
-  
 
   return (
     <>

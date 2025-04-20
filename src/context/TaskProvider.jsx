@@ -31,7 +31,9 @@ export const TaskProvider = ({ children }) => {
     getCards();
 }, [newToken]);
 
-  
+
+
+
   return (
     <TaskContext.Provider
       value={{

@@ -1,17 +1,26 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { postCard } from "../../services/api";
+import { AuthContext } from "../../context/AuthContext";
+import { TaskContext } from "../../context/TaskContext";
 
-const PopNewCard = ({ setCards }) => {
+const PopNewCard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [topic, setTopic] = useState("Web Design");
   const [formData, setFormData] = useState({
+  
     title: "",
     topic: topic,
     date: new Date().toISOString(),
     status: "Без статуса",
     description: "",
   });
+  const { user } = useContext(AuthContext);
+    const Token = user.token
+const {setCards} = useContext(TaskContext)
+
+
+
   useEffect(() => {
     setFormData(prev => ({ ...prev, topic }));
   }, [topic]);
@@ -24,8 +33,7 @@ const PopNewCard = ({ setCards }) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const userData = JSON.parse(localStorage.getItem("userInfo"));
-  const Token = userData.token;
+  
   const handleSubmit = async (e) => {
     try {
       setIsLoading(true);
