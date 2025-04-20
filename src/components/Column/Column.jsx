@@ -17,7 +17,6 @@ const Column = ({ status, cards }) => {
               key={card._id}
               id={card._id}
             />
-          
           );
         })}
       </ColumnCard>

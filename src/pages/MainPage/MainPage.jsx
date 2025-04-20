@@ -1,51 +1,24 @@
 import Header from "../../components/Header/Header";
-import { useCallback, useEffect, useState } from "react";
+
 import Column from "../../components/Column/Column";
 import { Container, MainBlock, MainContent, Wrapper } from "./SMainPage";
 import { Outlet } from "react-router-dom";
 import { statusList } from "../../../data";
-import { fetchCards } from "../../services/api";
+import { useContext } from "react";
+import { TaskContext } from "../../context/TaskContext";
 
-
-function MainPage({setCards, cards, newToken}) {
+function MainPage() {
+  const useCardsData = useContext(TaskContext);
+  const loading = useCardsData.loading;
+  const cards = useCardsData.cards;
+  const error = useCardsData.error;
+  console.log(statusList);
   
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
-  }, [loading]);
-
-  
-  
-  const [error, setError] = useState('');
-
-  const getCards = useCallback(async () => {
-    try {
-      if (!newToken) return
-       setLoading(true);
-       const data = await fetchCards({
-          token: newToken,
-       });
-       
-       setCards(data);
-    } catch (err) {
-       setError(err.message);
-    } finally {
-       setLoading(false);
-    }
- }, [setCards, newToken]);
- useEffect(() => {
-  
-    getCards();
- }, [getCards]);
 
   return (
     <>
       <Wrapper>
-        
-        <Header  />
+        <Header />
         <main>
           <Container>
             <MainBlock>
@@ -66,7 +39,6 @@ function MainPage({setCards, cards, newToken}) {
                       key={item.status}
                       status={item.status}
                       cards={cards.filter((el) => el.status === item.status)}
-                    
                     />
                   ))
                 )}
@@ -75,9 +47,8 @@ function MainPage({setCards, cards, newToken}) {
             </MainBlock>
           </Container>
         </main>
-        <Outlet/>
+        <Outlet />
       </Wrapper>
-
     </>
   );
 }
