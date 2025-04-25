@@ -662,6 +662,7 @@ body {
   padding: 11px 14px 10px;
   margin-right: 7px;
   margin-bottom: 7px;
+  cursor: pointer;
 }
 .status__theme p {
   font-size: 14px;

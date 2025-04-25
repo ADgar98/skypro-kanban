@@ -1,38 +1,36 @@
 import { useContext, useEffect, useState } from "react";
 import { TaskContext } from "./TaskContext";
-import { fetchCards} from "../services/api";
+import { fetchCards } from "../services/api";
 import { AuthContext } from "./AuthContext";
 
 export const TaskProvider = ({ children }) => {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { user } = useContext(AuthContext);
-  const newToken = user.token
+  const [cardInfo, setCardInfo] = useState([]);
 
-  
+  const { user } = useContext(AuthContext);
+  const newToken = user.token;
+
   useEffect(() => {
     const getCards = async () => {
-        try {
-          if (!newToken) return;
-          setLoading(true);
-          const data = await fetchCards({
-            token: newToken,
-          });
-    
-          setCards(data);
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
-        }
+      try {
+        if (!newToken) return;
+        setLoading(true);
+        const data = await fetchCards({
+          token: newToken,
+        });
+
+        setCards(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
-    
+
     getCards();
-}, [newToken]);
-
-
-
+  }, [newToken]);
 
   return (
     <TaskContext.Provider
@@ -43,7 +41,9 @@ export const TaskProvider = ({ children }) => {
         setLoading,
         error,
         setError,
-        newToken
+        newToken,
+        cardInfo,
+        setCardInfo,
       }}
     >
       {children}
