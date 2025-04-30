@@ -4,6 +4,9 @@ import { checkLs } from "../checkLs";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(checkLs());
+  const [isAuth, setIsAuth] = useState(null);
+
+
   
   useEffect(() => {
     // А тут мы проверяем ЛС, когда приложение запускается
@@ -11,12 +14,14 @@ export const AuthProvider = ({ children }) => {
       const storedUser = localStorage.getItem("userInfo");
       if (storedUser) {
         setUser(JSON.parse(storedUser));
+        setIsAuth(true);
       }
     } catch (error) {
       console.error("Ошибка при загрузке данных из localStorage:", error);
     }
   }, []);
 
+  
   // Обновляем данные о пользователе и сохраняем в лс
   const updateUserInfo = (userData) => {
     setUser(userData);
@@ -26,6 +31,11 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("userInfo");
     }
   };
+
+  if (isAuth === null) {
+    return <div>Loading...</div>; // Или лоадер
+  }
+
 
   const login = (loginData) => {
     updateUserInfo(loginData);
@@ -37,7 +47,7 @@ export const AuthProvider = ({ children }) => {
     return true;
   };
   return (
-    <AuthContext.Provider value={{ user, login, logout, updateUserInfo }}>
+    <AuthContext.Provider value={{ user, login, logout, updateUserInfo, isAuth, setIsAuth }}>
       {children}
     </AuthContext.Provider>
   );

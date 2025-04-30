@@ -459,7 +459,19 @@ body {
   padding: 0 7px;
 }
 .calendar__period {
-  padding: 0 7px;
+  margin-top: 15px;
+  padding-top: 15px;
+  padding-left: 8px;
+  
+}
+.date-control{
+  font-weight: bold;
+  
+  background-color: #f5f5ff;
+ 
+  border-radius: 4px;
+  
+  min-width: 80px;
 }
 
 .nav__actions {

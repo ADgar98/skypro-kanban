@@ -7,7 +7,8 @@ export const TaskProvider = ({ children }) => {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [cardInfo, setCardInfo] = useState([]);
+  
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const { user } = useContext(AuthContext);
   const newToken = user.token;
@@ -41,9 +42,8 @@ export const TaskProvider = ({ children }) => {
         setLoading,
         error,
         setError,
-        newToken,
-        cardInfo,
-        setCardInfo,
+        selectedDate,
+        setSelectedDate
       }}
     >
       {children}

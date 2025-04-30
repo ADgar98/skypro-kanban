@@ -11,24 +11,12 @@ import {
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
 
-import { useContext } from "react";
-import { TaskContext } from "../../context/TaskContext";
-import { indiCard } from "../../services/api";
+
 
 const Card = ({ topic, title, date, id }) => {
-  const { newToken } = useContext(TaskContext);
-  const token = newToken;
-  const { setCardInfo } = useContext(TaskContext);
+  
 
-  const getCardInfo = async () => {
-    try {
-      const InfoCard = await indiCard(id, token);
-      setCardInfo(InfoCard);
-    } catch (error) {
-      console.error("Ошибка при редактировании карточки:", error);
-      throw error; // Пробрасываем ошибку для обработки в компоненте
-    }
-  };
+  
 
   const formatDateFns = () => {
     return format(date, "dd.MM.yy", { locale: ru });
@@ -42,7 +30,7 @@ const Card = ({ topic, title, date, id }) => {
           <CardTheme $topic={topic}>
             <p>{topic}</p>
           </CardTheme>
-          <Link onMouseEnter={getCardInfo} to={`card/${id}`}>
+          <Link to={`card/${id}`}>
             <CardBtn>
               <div></div>
               <div></div>
