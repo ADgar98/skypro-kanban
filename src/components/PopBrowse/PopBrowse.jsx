@@ -53,7 +53,7 @@ const PopBrowse = () => {
       setCards(newCardsList.data.tasks);
       navigate("/");
     } catch (error) {
-      alert("Ошибка при удалении карточки:", error);
+      alert("Ошибка при удалении карточки", error);
       throw error; // Пробрасываем ошибку для обработки в компоненте
     }
   }
