@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { TaskContext } from "./TaskContext";
 import { fetchCards } from "../services/api";
 import { AuthContext } from "./AuthContext";
@@ -7,11 +7,11 @@ export const TaskProvider = ({ children }) => {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  
+
   const [selectedDate, setSelectedDate] = useState(null);
 
   const { user } = useContext(AuthContext);
-  const newToken = user.token;
+  const newToken = useMemo(() => user?.token, [user?.token]);
 
   useEffect(() => {
     const getCards = async () => {
@@ -21,6 +21,7 @@ export const TaskProvider = ({ children }) => {
         const data = await fetchCards({
           token: newToken,
         });
+        console.log(newToken);
 
         setCards(data);
       } catch (err) {
@@ -43,7 +44,7 @@ export const TaskProvider = ({ children }) => {
         error,
         setError,
         selectedDate,
-        setSelectedDate
+        setSelectedDate,
       }}
     >
       {children}

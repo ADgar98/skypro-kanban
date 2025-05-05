@@ -6,10 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(checkLs());
   const [isAuth, setIsAuth] = useState(null);
 
-
-  
   useEffect(() => {
-    // А тут мы проверяем ЛС, когда приложение запускается
     try {
       const storedUser = localStorage.getItem("userInfo");
       if (storedUser) {
@@ -21,8 +18,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  
-  // Обновляем данные о пользователе и сохраняем в лс
   const updateUserInfo = (userData) => {
     setUser(userData);
     if (userData) {
@@ -33,9 +28,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   if (isAuth === null) {
-    return <div>Loading...</div>; // Или лоадер
+    return <div>Loading...</div>;
   }
-
 
   const login = (loginData) => {
     updateUserInfo(loginData);
@@ -47,7 +41,17 @@ export const AuthProvider = ({ children }) => {
     return true;
   };
   return (
-    <AuthContext.Provider value={{ user, login, logout, updateUserInfo, isAuth, setIsAuth }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        logout,
+        updateUserInfo,
+        isAuth,
+        setIsAuth,
+        setUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

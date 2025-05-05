@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { TaskContext } from "../../context/TaskContext";
 import axios from "axios";
-import { Calendar } from "../calendar/Calendar";
+import { Calendar } from "../Calendar/Calendar";
 
 import { indiCard } from "../../services/api";
 import { AuthContext } from "../../context/AuthContext";
@@ -17,7 +17,7 @@ const PopBrowse = () => {
       setCardInfo(InfoCard);
     } catch (error) {
       console.error("Ошибка при редактировании карточки:", error);
-      throw error; // Пробрасываем ошибку для обработки в компоненте
+      throw error;
     }
   };
 
@@ -28,15 +28,15 @@ const PopBrowse = () => {
 
   const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState(false);
-  const originalData = useRef([]); // Используем useRef
+  const originalData = useRef([]);
 
   const handleEditStart = () => {
-    originalData.current = cardInfo; // Сохраняем текущие данные
+    originalData.current = cardInfo;
     setIsEdit(true);
   };
 
   const handleCancel = () => {
-    setCardInfo(originalData.current); // Восстанавливаем из ref
+    setCardInfo(originalData.current);
     setIsEdit(false);
   };
 
@@ -54,7 +54,7 @@ const PopBrowse = () => {
       navigate("/");
     } catch (error) {
       alert("Ошибка при удалении карточки", error);
-      throw error; // Пробрасываем ошибку для обработки в компоненте
+      throw error;
     }
   }
 
@@ -71,7 +71,7 @@ const PopBrowse = () => {
       navigate("/");
     } catch (error) {
       alert("Ошибка при редактировнии карточки:", error);
-      throw error; // Пробрасываем ошибку для обработки в компоненте
+      throw error;
     }
   }
 

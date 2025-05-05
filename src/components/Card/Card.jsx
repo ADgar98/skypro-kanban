@@ -14,10 +14,6 @@ import { ru } from "date-fns/locale";
 
 
 const Card = ({ topic, title, date, id }) => {
-  
-
-  
-
   const formatDateFns = () => {
     return format(date, "dd.MM.yy", { locale: ru });
   };

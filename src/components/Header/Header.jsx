@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ModalWin from "../ModalWin/ModalWin";
-import PopNewCard from "../PopNewCard/PopNewCard";
+
 import {
   HeaderBlock,
   HeaderBtnMainNew,
@@ -14,16 +14,11 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [isPopNewCardOpen, setIsPopNewCardOpen] = useState(false);
+
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
   const userData = JSON.parse(localStorage.getItem("userInfo"));
- 
-  
-  // const openPopNewCard = () => {
-  //   setIsPopNewCardOpen(true);
-  // };
 
   return (
     <SHeader>
@@ -43,12 +38,10 @@ const Header = () => {
             <HeaderBtnMainNew id="btnMainNew">
               <Link to="/NewCard">Создать новую задачу</Link>
             </HeaderBtnMainNew>
-            <HeaderUser onClick={toggleModal}>
-              {userData.name}
-            </HeaderUser>
-            {isModalOpen && <ModalWin userName={userData.name} userLogin={userData.login} />}
-        
-      
+            <HeaderUser onClick={toggleModal}>{userData.name}</HeaderUser>
+            {isModalOpen && (
+              <ModalWin userName={userData.name} userLogin={userData.login} />
+            )}
           </HeaderNav>
         </HeaderBlock>
       </HeaderContainer>

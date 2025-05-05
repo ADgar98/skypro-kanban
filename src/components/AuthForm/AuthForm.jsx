@@ -10,90 +10,85 @@ import {
   SModalSignIn,
   StyledP,
 } from "./StyledAuthForm";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { signIn, signUp } from "../../services/auth";
+import { AuthContext } from "../../context/AuthContext";
 
+export const AuthForm = ({ isSignUp, setIsAuth }) => {
+  const { setUser } = useContext(AuthContext);
 
-export const AuthForm = ({ isSignUp, setIsAuth, setNewToken }) => {
-  
-
- 
   const navigate = useNavigate();
-   
-   const [formData, setFormData] = useState({
+
+  const [formData, setFormData] = useState({
     name: "",
     login: "",
     password: "",
- });
-
- const [errors, setErrors] = useState({
-    name: "",
-    login: "",
-    password: "",
- });
-
- const [error, setError] = useState("");
-
- const validateForm = () => {
-  const newErrors = { name: "", login: "", password: "" };
-  let isValid = true;
-
-  if (isSignUp && !formData.name.trim()) {
-     newErrors.name = true;
-     setError("Заполните все поля");
-     isValid = false;
-  }
-
-  if (!formData.login.trim()) {
-     newErrors.login = true;
-     setError("Заполните все поля");
-     isValid = false;
-  }
-
-  if (!formData.password.trim()) {
-     newErrors.password = true;
-     setError("Заполните все поля");
-     isValid = false;
-  }
-
-  setErrors(newErrors);
-  return isValid;
-};
-
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  setFormData({
-     ...formData,
-     [name]: value,
   });
-  setErrors({ ...errors, [name]: false });
-  setError("");
-};
 
-// функция отправки формы
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (!validateForm()) {
-     // если у нас форма не прошла валидацию, то дальше не продолжаем
-     return;
-  }
-try { 
-  // чтобы не писать две разных функции, выберем нужный запрос через 
-  // тернарный оператор
-  const data = !isSignUp
-     ? await signIn({ login: formData.login, password: formData.password })
-     : await signUp(formData);
+  const [errors, setErrors] = useState({
+    name: "",
+    login: "",
+    password: "",
+  });
 
-  if (data) {
-     setIsAuth(true);
-     localStorage.setItem("userInfo", JSON.stringify(data));
-     navigate("/");
-     setNewToken(data.token)
-  }
-  } catch (err) {
-     setError(err.message);
-  }
-};
+  const [error, setError] = useState("");
+
+  const validateForm = () => {
+    const newErrors = { name: "", login: "", password: "" };
+    let isValid = true;
+
+    if (isSignUp && !formData.name.trim()) {
+      newErrors.name = true;
+      setError("Заполните все поля");
+      isValid = false;
+    }
+
+    if (!formData.login.trim()) {
+      newErrors.login = true;
+      setError("Заполните все поля");
+      isValid = false;
+    }
+
+    if (!formData.password.trim()) {
+      newErrors.password = true;
+      setError("Заполните все поля");
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    setErrors({ ...errors, [name]: false });
+    setError("");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
+    try {
+      const data = !isSignUp
+        ? await signIn({ login: formData.login, password: formData.password })
+        : await signUp(formData);
+
+      if (data) {
+        setIsAuth(true);
+        localStorage.setItem("userInfo", JSON.stringify(data));
+        navigate("/");
+        setUser(data);
+      }
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
   return (
     <SAuthFormConteiner>
@@ -105,17 +100,15 @@ try {
           <SModalFormLogin id="formLogIn" onSubmit={handleSubmit} action="#">
             {isSignUp && (
               <SModalInput
-             
-              type="text"
-              name="name"
-              id="formname"
-              placeholder="Имя"
-              value={formData.name}
-              onChange={handleChange}
+                type="text"
+                name="name"
+                id="formname"
+                placeholder="Имя"
+                value={formData.name}
+                onChange={handleChange}
               />
             )}
             <SModalInput
-              
               type="text"
               name="login"
               id="formlogin"
@@ -124,7 +117,6 @@ try {
               onChange={handleChange}
             />
             <SModalInput
-              
               type="password"
               name="password"
               id="formpassword"
