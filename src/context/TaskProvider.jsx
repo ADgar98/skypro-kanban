@@ -21,7 +21,6 @@ export const TaskProvider = ({ children }) => {
         const data = await fetchCards({
           token: newToken,
         });
-        console.log(newToken);
 
         setCards(data);
       } catch (err) {

@@ -4,6 +4,26 @@ import { postCard } from "../../services/api";
 import { AuthContext } from "../../context/AuthContext";
 import { TaskContext } from "../../context/TaskContext";
 import { Calendar } from "../Calendar/Calendar";
+import {
+  LoadingIndicator,
+  SPopNewCardForm,
+  PopupCloseLink,
+  Spinner,
+  SPopNewCard,
+  SPopNewCardBlock,
+  SPopNewCardContainer,
+  SPopNewCardContent,
+  SPopNewCardTtl,
+  SPopNewCardWrap,
+  SFormNewBlock,
+  SSubttl,
+  SFormNewInput,
+  SFormNewArea,
+  SPopNewCardCategories,
+  CategoriesThemes,
+  CategoriesP,
+  SFormNewCreate,
+} from "./SPopNewCard";
 
 const PopNewCard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -92,32 +112,23 @@ const PopNewCard = () => {
   };
 
   return (
-    <div className="pop-new-card" id="popNewCard">
+    <SPopNewCard>
       {isLoading && (
-        <div className="loading-indicator">
-          <div className="spinner"></div>
+        <LoadingIndicator>
+          <Spinner></Spinner>
           <p>Добавляем карточку...</p>
-        </div>
+        </LoadingIndicator>
       )}
-      <div className="pop-new-card__container">
-        <div className="pop-new-card__block">
-          <div className="pop-new-card__content">
-            <h3 className="pop-new-card__ttl">Создание задачи</h3>
-            <Link to="/" className="pop-new-card__close">
-              &#10006;
-            </Link>
-            <div className="pop-new-card__wrap">
-              <form
-                onSubmit={handleSubmit}
-                className="pop-new-card__form form-new"
-                id="formNewCard"
-              >
-                <div className="form-new__block">
-                  <label htmlFor="formTitle" className="subttl">
-                    Название задачи
-                  </label>
-                  <input
-                    className="form-new__input"
+      <SPopNewCardContainer>
+        <SPopNewCardBlock>
+          <SPopNewCardContent>
+            <SPopNewCardTtl>Создание задачи</SPopNewCardTtl>
+            <PopupCloseLink to="/">&#10006;</PopupCloseLink>
+            <SPopNewCardWrap>
+              <SPopNewCardForm onSubmit={handleSubmit}>
+                <SFormNewBlock>
+                  <SSubttl htmlFor="formTitle">Название задачи</SSubttl>
+                  <SFormNewInput
                     type="text"
                     name="title"
                     value={formData.title}
@@ -131,13 +142,11 @@ const PopNewCard = () => {
                     }}
                     autoFocus
                   />
-                </div>
-                <div className="form-new__block">
-                  <label htmlFor="textArea" className="subttl">
-                    Описание задачи
-                  </label>
-                  <textarea
-                    className="form-new__area"
+                </SFormNewBlock>
+
+                <SFormNewBlock>
+                  <SSubttl htmlFor="textArea">Описание задачи</SSubttl>
+                  <SFormNewArea
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
@@ -147,19 +156,19 @@ const PopNewCard = () => {
                       borderColor: error ? "red" : "#ccc",
                       color: error ? "red" : "inherit",
                     }}
-                  ></textarea>
-                </div>
-              </form>
+                  ></SFormNewArea>
+                </SFormNewBlock>
+              </SPopNewCardForm>
               <Calendar
                 currentDate={new Date(formData.date)}
                 setCurrentDate={(date) => {
                   setFormData({ ...formData, date });
                 }}
               />
-            </div>
-            <div className="pop-new-card__categories categories">
-              <p className="categories__p subttl">Категория</p>
-              <div className="categories__themes">
+            </SPopNewCardWrap>
+            <SPopNewCardCategories>
+              <CategoriesP>Категория</CategoriesP>
+              <CategoriesThemes>
                 <div
                   className={`categories__theme _orange ${
                     topic === "Web Design" ? "_active-category" : ""
@@ -190,21 +199,16 @@ const PopNewCard = () => {
                     Copywriting
                   </p>
                 </div>
-              </div>
-            </div>
+              </CategoriesThemes>
+            </SPopNewCardCategories>
 
-            <button
-              onClick={handleSubmit}
-              type="submit"
-              className="form-new__create _hover01"
-              id="btnCreate"
-            >
+            <SFormNewCreate onClick={handleSubmit} type="submit" id="btnCreate">
               Создать задачу
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+            </SFormNewCreate>
+          </SPopNewCardContent>
+        </SPopNewCardBlock>
+      </SPopNewCardContainer>
+    </SPopNewCard>
   );
 };
 export default PopNewCard;

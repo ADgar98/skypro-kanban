@@ -28,7 +28,6 @@ export async function signUp({ name, login, password }) {
    );
    return data.data.user;
    } catch (error) {
-      console.log(error);
       throw new Error(error.response.data.error);
   }
 }
