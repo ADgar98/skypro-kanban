@@ -8,13 +8,16 @@ import {
   PopExitYes,
   StyledPopExit,
 } from "./SPopExit";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
-const PopExit = ({ setIsAuth }) => {
+const PopExit = () => {
+  const { logout } = useContext(AuthContext)
   const navigate = useNavigate();
   const deleteIsAuth = (e) => {
     e.preventDefault();
     navigate("/signIn");
-    setIsAuth(false);
+    logout()
   };
   return (
     <StyledPopExit id="popExit">
@@ -23,7 +26,7 @@ const PopExit = ({ setIsAuth }) => {
           <PopExitTtl>
             <h2>Выйти из аккаунта?</h2>
           </PopExitTtl>
-          <form className="pop-exit__form" id="formExit" action="#">
+          <form id="formExit" action="#">
             <PopExitFormGroup>
               <PopExitYes onClick={deleteIsAuth} id="exitYes">
                 <p>Да, выйти</p>

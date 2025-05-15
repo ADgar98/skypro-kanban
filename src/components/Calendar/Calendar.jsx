@@ -1,5 +1,6 @@
 import {
   CalendarBlock,
+  CalendarCell,
   CalendarCells,
   CalendarContent,
   CalendarDayName,
@@ -51,11 +52,13 @@ export const Calendar = ({ currentDate, setCurrentDate }) => {
     const offset = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
 
     const prevMonthDays = getDaysInMonth(year, month - 1);
-    for (let i = offset - 1; i >= 0; i--) {
+    for (let i = offset; i > 0; i--) {
+      
+      
       days.push(
-        <div key={`prev-${i}`} className="calendar__cell _other-month">
-          {prevMonthDays - i}
-        </div>
+        <CalendarCell key={`prev-${i}`} $isOtherMonth>
+          {prevMonthDays - i + 1}
+        </CalendarCell>
       );
     }
 
@@ -63,27 +66,24 @@ export const Calendar = ({ currentDate, setCurrentDate }) => {
       const dayDate = new Date(year, month, i);
       const isSelected =
         currentDate && dayDate.toDateString() === currentDate.toDateString();
-      const isWeekend = [5, 6].includes(new Date(year, month, i).getDay());
 
       days.push(
-        <div
+        <CalendarCell
+          $isSelectedDay={isSelected}
           key={`curr-${i}`}
-          className={`calendar__cell _cell-day ${isWeekend ? "_weekend" : ""} ${
-            isSelected ? "_active-day" : ""
-          }`}
           onClick={() => setCurrentDate(dayDate)}
         >
           {i}
-        </div>
+        </CalendarCell>
       );
     }
 
     const daysLeft = 42 - days.length;
     for (let i = 1; i <= daysLeft; i++) {
       days.push(
-        <div key={`next-${i}`} className="calendar__cell _other-month">
+        <CalendarCell key={`next-${i}`} $isOtherMonth>
           {i}
-        </div>
+        </CalendarCell>
       );
     }
 
@@ -128,14 +128,7 @@ export const Calendar = ({ currentDate, setCurrentDate }) => {
         <CalendarContent>
           <CalendarDaysNames>
             {["пн", "вт", "ср", "чт", "пт", "сб", "вс"].map((day) => (
-              <CalendarDayName
-                key={day}
-                className={`calendar__day-name ${
-                  day === "сб" || day === "вс" ? "-weekend-" : ""
-                }`}
-              >
-                {day}
-              </CalendarDayName>
+              <CalendarDayName key={day}>{day}</CalendarDayName>
             ))}
           </CalendarDaysNames>
           <CalendarCells>{renderDays()}</CalendarCells>

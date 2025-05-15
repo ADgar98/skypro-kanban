@@ -266,3 +266,79 @@ export const SPopBrowseBtnEdit = styled.div`
     }
   }
 `;
+
+export const CategoriesTheme = styled.div`
+  display: inline-block;
+  width: auto;
+  height: 30px;
+  padding: 8px 20px;
+  border-radius: 24px;
+  margin-right: 7px;
+  opacity: 1;
+  ${({ $topic }) => {
+    switch ($topic) {
+      case "Web Design":
+        return `background-color: #FFE4C2;
+                 color: #FF6D00;`;
+      case "Research":
+        return `background-color: #B4FDD1;
+  color: #06B16E;`;
+      case "Copywriting":
+        return `background-color: #E9D4FF;
+  color: #9A48F1`;
+      default:
+        return "";
+    }
+  }}
+`;
+
+export const SStatusTheme = styled.div`
+  border-radius: 24px;
+  border: 0.7px solid rgba(148, 166, 190, 0.4);
+  color: #94a6be;
+  padding: 11px 14px 10px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  cursor: pointer;
+  p {
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -0.14px;
+  }
+  display: ${({ $isEdit }) => ($isEdit ? "none" : "")};
+  ${({ $isEdit }) =>
+    !$isEdit &&
+    `
+    background: #94A6BE;
+    color: #FFFFFF;
+  `}
+  ${({ $isActiv }) => {
+    $isActiv &&
+      `
+    background: #94A6BE;
+    color: #FFFFFF;
+  `;
+  }}
+`;
+
+export const SStatusThemeEdit = styled.div`
+  border-radius: 24px;
+  border: 0.7px solid rgba(148, 166, 190, 0.4);
+  color: #94a6be;
+  padding: 11px 14px 10px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  cursor: pointer;
+  p {
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: -0.14px;
+  }
+
+  ${({ $isActiv }) =>
+    $isActiv &&
+    `
+    background: #94A6BE;
+    color: #FFFFFF;
+  `}
+`;

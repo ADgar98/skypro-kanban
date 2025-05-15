@@ -15,8 +15,9 @@ export const TaskProvider = ({ children }) => {
 
   useEffect(() => {
     const getCards = async () => {
+      if (!newToken) return;
       try {
-        if (!newToken) return;
+        
         setLoading(true);
         const data = await fetchCards({
           token: newToken,

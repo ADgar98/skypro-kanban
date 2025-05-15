@@ -240,3 +240,26 @@ export const SFormNewCreate = styled.button`
     height: 40px;
   }
 `;
+
+ const SCategoriesTheme = styled.div`
+display: inline-block;
+  width: auto;
+  height: 30px;
+  padding: 8px 20px;
+  border-radius: 24px;
+  margin-right: 7px;
+  cursor: pointer;
+  opacity: ${({ $isActive }) => $isActive ? 1 : 0.4};
+`
+export const OrangeCategory = styled(SCategoriesTheme)`
+background-color: #FFE4C2;
+  color: #FF6D00;
+`
+export const GreenCategory = styled(SCategoriesTheme)`
+background-color: #B4FDD1;
+  color: #06B16E;
+`
+export const PurpleCategory = styled(SCategoriesTheme)`
+background-color: #E9D4FF;
+  color: #9A48F1;
+`

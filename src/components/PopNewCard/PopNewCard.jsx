@@ -23,6 +23,9 @@ import {
   CategoriesThemes,
   CategoriesP,
   SFormNewCreate,
+  OrangeCategory,
+  GreenCategory,
+  PurpleCategory,
 } from "./SPopNewCard";
 
 const PopNewCard = () => {
@@ -169,36 +172,30 @@ const PopNewCard = () => {
             <SPopNewCardCategories>
               <CategoriesP>Категория</CategoriesP>
               <CategoriesThemes>
-                <div
-                  className={`categories__theme _orange ${
-                    topic === "Web Design" ? "_active-category" : ""
-                  }`}
+                <OrangeCategory
+                   $isActive={topic === "Web Design"}
                 >
-                  <p onClick={() => setTopic("Web Design")} className="_orange">
+                  <p onClick={() => setTopic("Web Design")} >
                     Web Design
                   </p>
-                </div>
-                <div
-                  className={`categories__theme _green ${
-                    topic === "Research" ? "_active-category" : ""
-                  }`}
+                </OrangeCategory>
+                <GreenCategory $isActive={topic === "Research"}
+                  
                 >
-                  <p onClick={() => setTopic("Research")} className="_green">
+                  <p onClick={() => setTopic("Research")} >
                     Research
                   </p>
-                </div>
-                <div
-                  className={`categories__theme _purple ${
-                    topic === "Copywriting" ? "_active-category" : ""
-                  }`}
+                </GreenCategory>
+                <PurpleCategory $isActive={topic === "Copywriting"}
+                  
                 >
                   <p
                     onClick={() => setTopic("Copywriting")}
-                    className="_purple"
+                    
                   >
                     Copywriting
                   </p>
-                </div>
+                </PurpleCategory>
               </CategoriesThemes>
             </SPopNewCardCategories>
 

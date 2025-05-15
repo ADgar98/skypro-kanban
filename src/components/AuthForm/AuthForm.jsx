@@ -14,7 +14,7 @@ import { useContext, useState } from "react";
 import { signIn, signUp } from "../../services/auth";
 import { AuthContext } from "../../context/AuthContext";
 
-export const AuthForm = ({ isSignUp, setIsAuth }) => {
+export const AuthForm = ({ isSignUp }) => {
   const { setUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -80,7 +80,7 @@ export const AuthForm = ({ isSignUp, setIsAuth }) => {
         : await signUp(formData);
 
       if (data) {
-        setIsAuth(true);
+        
         localStorage.setItem("userInfo", JSON.stringify(data));
         navigate("/");
         setUser(data);

@@ -1,8 +1,6 @@
-import PopBrowseEdit from "../../components/PopBrowseEdit/PopBrowseEdit"
-
-
+import PopBrowseEdit from "../../components/PopBrowseEdit/PopBrowseEdit";
 
 const PopBrowseEditPage = () => {
-return(<PopBrowseEdit/>)
-}
-export default PopBrowseEditPage
+  return <PopBrowseEdit />;
+};
+export default PopBrowseEditPage;

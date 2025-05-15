@@ -4,14 +4,13 @@ import { checkLs } from "../checkLs";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(checkLs());
-  const [isAuth, setIsAuth] = useState(null);
+  const isAuth = user !== null;
 
   useEffect(() => {
     try {
       const storedUser = localStorage.getItem("userInfo");
       if (storedUser) {
         setUser(JSON.parse(storedUser));
-        setIsAuth(true);
       }
     } catch (error) {
       console.error("Ошибка при загрузке данных из localStorage:", error);
@@ -26,10 +25,6 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("userInfo");
     }
   };
-
-  if (isAuth === null) {
-    return <div>Loading...</div>;
-  }
 
   const login = (loginData) => {
     updateUserInfo(loginData);
@@ -48,7 +43,6 @@ export const AuthProvider = ({ children }) => {
         logout,
         updateUserInfo,
         isAuth,
-        setIsAuth,
         setUser,
       }}
     >

@@ -1,12 +1,12 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { TaskContext } from "../../context/TaskContext";
-import axios from "axios";
 import { Calendar } from "../Calendar/Calendar";
 
-import { indiCard } from "../../services/api";
+import { deleteFetch, indiCard, putFetch } from "../../services/api";
 import { AuthContext } from "../../context/AuthContext";
 import {
+  CategoriesTheme,
   PopBrowseContainer,
   PopBrowseContent,
   PopBrowseForm,
@@ -17,16 +17,16 @@ import {
   SBtnBrowseEdit,
   SBtnBrowseSave,
   SBtnGroup,
-  SCategoriesP,
   SFormBrowseArea,
   SFormBrowseBlock,
   SPopBrowseBlock,
   SPopBrowseBtnBrowse,
   SPopBrowseBtnEdit,
+  SStatusTheme,
+  SStatusThemeEdit,
   Status,
   StatusP,
   StatusThemes,
-  SThemeDown,
   StyledPopBrowse,
 } from "./SPopBrowse";
 
@@ -47,7 +47,6 @@ const PopBrowse = () => {
   const params = useParams();
 
   const id = params.id;
-  const API_URL = "https://wedev-api.sky.pro/api/kanban";
 
   const navigate = useNavigate();
   const [isEdit, setIsEdit] = useState(false);
@@ -67,13 +66,9 @@ const PopBrowse = () => {
 
   async function deleteCard() {
     try {
-      const newCardsList = await axios.delete(`${API_URL}/${id}`, {
-        headers: {
-          Authorization: "Bearer " + user.token,
-        },
-      });
+      const newCardsList = await deleteFetch(id, user.token);
 
-      setCards(newCardsList.data.tasks);
+      setCards(newCardsList);
       navigate("/");
     } catch (error) {
       alert("Ошибка при удалении карточки", error);
@@ -83,33 +78,14 @@ const PopBrowse = () => {
 
   async function putCard() {
     try {
-      const newCardsList = await axios.put(`${API_URL}/${id}`, cardInfo, {
-        headers: {
-          "Content-Type": "text/html",
-          Authorization: "Bearer " + user.token,
-        },
-      });
-
-      setCards(newCardsList.data.tasks);
+      const newCardsList = await putFetch(id, user.token, cardInfo);
+      setCards(newCardsList);
       navigate("/");
     } catch (error) {
       alert("Ошибка при редактировнии карточки:", error);
       throw error;
     }
   }
-
-  const getTopicClass = (topic) => {
-    switch (topic) {
-      case "Web Design":
-        return "_orange";
-      case "Research":
-        return "_green";
-      case "Copywriting":
-        return "_purple";
-      default:
-        return "_default";
-    }
-  };
 
   useEffect(() => {
     getCardInfo(id);
@@ -121,125 +97,74 @@ const PopBrowse = () => {
         <SPopBrowseBlock>
           <PopBrowseContent>
             <PopBrowseTopBlock>
-              {" "}
               <PopBrowseTtl> {cardInfo?.title}</PopBrowseTtl>
-              <div
-                className={`categories__theme theme-top _active-category ${getTopicClass(
-                  cardInfo?.topic
-                )}`}
-              >
-                <p className={getTopicClass(cardInfo?.topic)}>
-                  {cardInfo?.topic}
-                </p>
-              </div>
+              <CategoriesTheme $topic={cardInfo?.topic}>
+                <p>{cardInfo?.topic}</p>
+              </CategoriesTheme>
             </PopBrowseTopBlock>
             <Status>
               <StatusP>Статус</StatusP>
               <StatusThemes>
-                <div
-                  className={`status__theme ${!isEdit ? "_gray" : "_hide "}`}
-                >
-                  <p className={`${!isEdit ? "_gray" : ""}`}>
-                    {cardInfo?.status}
-                  </p>
-                </div>
+                <SStatusTheme $isEdit={isEdit}>
+                  <p>{cardInfo?.status}</p>
+                </SStatusTheme>
                 {isEdit && (
                   <>
-                    <div
+                    <SStatusThemeEdit
+                      $isActiv={cardInfo.status === "Без статуса"}
                       onClick={() =>
                         setCardInfo({
                           ...cardInfo,
                           status: "Без статуса",
                         })
                       }
-                      className={`status__theme ${
-                        cardInfo.status === "Без статуса" ? "_gray" : ""
-                      }`}
                     >
-                      <p
-                        className={`${
-                          cardInfo.status === "Без статуса" ? "_gray" : ""
-                        }`}
-                      >
-                        Без статуса
-                      </p>
-                    </div>
-                    <div
+                      <p>Без статуса</p>
+                    </SStatusThemeEdit>
+                    <SStatusThemeEdit
+                      $isActiv={cardInfo.status === "Нужно сделать"}
                       onClick={() =>
                         setCardInfo({
                           ...cardInfo,
                           status: "Нужно сделать",
                         })
                       }
-                      className={`status__theme ${
-                        cardInfo.status === "Нужно сделать" ? "_gray" : ""
-                      }`}
                     >
-                      <p
-                        className={`${
-                          cardInfo.status === "Нужно сделать" ? "_gray" : ""
-                        }`}
-                      >
-                        Нужно сделать
-                      </p>
-                    </div>
-                    <div
+                      <p>Нужно сделать</p>
+                    </SStatusThemeEdit>
+                    <SStatusThemeEdit
+                      $isActiv={cardInfo.status === "В работе"}
                       onClick={() =>
                         setCardInfo({
                           ...cardInfo,
                           status: "В работе",
                         })
                       }
-                      className={`status__theme ${
-                        cardInfo.status === "В работе" ? "_gray" : ""
-                      }`}
                     >
-                      <p
-                        className={`${
-                          cardInfo.status === "В работе" ? "_gray" : ""
-                        }`}
-                      >
-                        В работе
-                      </p>
-                    </div>
-                    <div
+                      <p>В работе</p>
+                    </SStatusThemeEdit>
+                    <SStatusThemeEdit
+                      $isActiv={cardInfo.status === "Тестирование"}
                       onClick={() =>
                         setCardInfo({
                           ...cardInfo,
                           status: "Тестирование",
                         })
                       }
-                      className={`status__theme ${
-                        cardInfo.status === "Тестирование" ? "_gray" : ""
-                      }`}
                     >
-                      <p
-                        className={`${
-                          cardInfo.status === "Тестирование" ? "_gray" : ""
-                        }`}
-                      >
-                        Тестирование
-                      </p>
-                    </div>
-                    <div
+                      <p>Тестирование</p>
+                    </SStatusThemeEdit>
+                    <SStatusThemeEdit
+                      $isActiv={cardInfo.status === "Готово"}
                       onClick={() =>
                         setCardInfo({
                           ...cardInfo,
                           status: "Готово",
                         })
                       }
-                      className={`status__theme ${
-                        cardInfo.status === "Готово" ? "_gray" : ""
-                      }`}
                     >
-                      <p
-                        className={`${
-                          cardInfo.status === "Готово" ? "_gray" : ""
-                        }`}
-                      >
-                        Готово
-                      </p>
-                    </div>
+                      <p>Готово</p>
+                    </SStatusThemeEdit>
                   </>
                 )}
               </StatusThemes>
