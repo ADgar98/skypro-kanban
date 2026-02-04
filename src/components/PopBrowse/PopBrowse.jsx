@@ -67,7 +67,6 @@ const PopBrowse = () => {
   async function deleteCard() {
     try {
       const newCardsList = await deleteFetch(id, user.token);
-
       setCards(newCardsList);
       navigate("/");
     } catch (error) {
